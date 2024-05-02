@@ -183,6 +183,7 @@ class WC_Conekta_Spei_Gateway extends WC_Conekta_Plugin
         echo '<p><h4><strong>'.__('Clabe').':</strong> ' . esc_html( get_post_meta( $order->get_id(), 'conekta-clabe', true ) ). '</h4></p>';
         echo '<p><h4><strong>'.esc_html(__('Beneficiario')).':</strong> '.esc_html($this->account_owner).'</h4></p>';
         echo '<p><h4><strong>'.esc_html(__('Banco Receptor')).':</strong>  Sistema de Transferencias y Pagos (STP)<h4></p>';
+        echo '<p>'. $this->settings['instructions'] .'</p>';
     }
 
     /**
@@ -213,7 +214,7 @@ class WC_Conekta_Spei_Gateway extends WC_Conekta_Plugin
     public function ckpg_email_instructions( $order, $sent_to_admin = false, $plain_text = false ) {
         $instructions = $this->form_fields['instructions'];
         if ( $instructions && 'on-hold' === $order->get_status() ) {
-            echo wpautop( wptexturize( esc_html($this->settings['instructions']) ) ) . PHP_EOL;
+            echo wpautop( wptexturize( $this->settings['instructions'] ) ) . PHP_EOL;
         }
     }
 
@@ -282,8 +283,16 @@ class WC_Conekta_Spei_Gateway extends WC_Conekta_Plugin
 
             update_post_meta($this->order->get_id(), 'conekta-order-id', $order->id);
 
+            $dias = 0 * 86400;
+            $horas = 6 * 3600;
+            $minutos = 0 * 60;
+            $segundos = 0;
+            $expires_at = time() + $dias + $horas + $minutos + $segundos;
             $charge_details = array(
-                'payment_method' => array('type' => 'spei'),
+                'payment_method' => array(
+                    'type' => 'spei',
+                    'expires_at' => $expires_at
+                ),
                 'amount'         => $amount
             );
 
