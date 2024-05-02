@@ -9,12 +9,12 @@
 <span style="width: 100%; float: left; color: red;" class='payment-errors required'></span>
 <div class="form-row form-row-wide">
   <label for="conekta-card-number"><?php echo esc_html($this->lang_options["card_number"]); ?><span class="required">*</span></label>
-  <input id="conekta-card-number" class="input-text" type="text" data-conekta="card[number]" maxlength=16 onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" />
+  <input id="conekta-card-number" class="input-text" type="text" inputmode="numeric" autocomplete="cc-number" data-conekta="card[number]" maxlength=16 onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;" />
 </div>
 
 <div class="form-row form-row-wide">
   <label for="conekta-card-name"> <?php echo esc_html($this->lang_options["card_name"]); ?><span class="required">*</span></label>
-  <input id="conekta-card-name" type="text" data-conekta="card[name]" class="input-text" />
+  <input id="conekta-card-name" type="text" autocomplete="cc-name" data-conekta="card[name]" class="input-text" />
 </div>
 
 <div class="clear"></div>
@@ -50,7 +50,7 @@
 
 <p class="form-row form-row-first">
     <label for="conekta-card-cvc">CVC <span class="required">*</span></label>
-    <input id="conekta-card-cvc" class="input-text" type="text" maxlength="4" data-conekta="card[cvc]" value=""  style="border-radius:6px"/>
+    <input id="conekta-card-cvc" class="input-text" type="text" autocomplete="cc-csc" inputmode="numeric" maxlength="4" data-conekta="card[cvc]" value=""  style="border-radius:6px"/>
 </p>
 
 <?php if ($this->enable_meses): ?>
